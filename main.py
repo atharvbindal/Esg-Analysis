@@ -3,7 +3,27 @@ import pandas as pd
 import json # To parse JSON response
 import io
 import re
+import os
+from mistralai import Mistral
+import base64
+import markdown
 
+
+
+api_key = #enter mistral ocr key here
+client = Mistral(api_key=api_key)
+
+ocr_response = client.ocr.process(
+    model="mistral-ocr-latest",
+    document={
+        "type": "document_url",
+        "document_url": "https://www.tatasteel.com/media/21242/business-responsibility-and-sustainability-report.pdf"
+    },
+    include_image_base64=True
+)
+for page in ocr_response.pages:
+    formatted_text = markdown.markdown(page.markdown)
+    print(formatted_text)
 # --- Configuration ---
 API_KEY = # PASTE YOUR API KEY HERE
 HTML_FILE_PATH = r"C:\Unified coding\Projects\Hackechino\document.md"
